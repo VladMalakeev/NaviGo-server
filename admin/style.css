@@ -1,0 +1,303 @@
+body{
+    background: #E4E4E44D;
+}
+#wrap{
+    max-height: 100%;
+    max-width: 1600px;
+    min-width: 800px;
+    margin: auto;
+}
+
+#header{
+    text-align: center;
+    border-bottom: 2px solid black;
+}
+
+
+#content{
+    width: 100%;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+	/*background-image: url("../img/bg.jpg");*/
+	background-size: cover;
+}
+
+#leftBar{
+    background: beige;
+    height: 500px;
+    box-shadow: 0 0 6px #00000080;
+}
+#topBtn{
+height: 80%;
+}
+#bottomBtn{
+height: 20%;
+}
+
+#bottomBtn a{
+    text-decoration: none;
+    padding: 2px;
+}
+
+#centerArea{
+    background: beige;
+    width: 100%;
+    margin-left: 0px;
+    height:500px ;
+    box-shadow: 0 0 6px #00000080;
+}
+#mapImg{
+    width: 200px;
+    position: absolute;
+    transform:translate(150%, 50%);
+    
+}
+
+#settingImg{
+    width: 150px;
+    position: absolute;
+    transform:translate(35%, 90%);
+    opacity: 0.8;
+}
+#TdMapId{
+    padding: 15px;
+}
+#map{
+    width: 100%;
+    height: 100%;
+}
+
+
+#rightBar{
+    box-shadow: 0 0 6px #00000080;
+    background: beige;
+    height: 500px;
+}
+.formTitle{
+    margin: 2px;
+    border-bottom: 1px solid black;
+    text-align: center;
+    font-weight: bold;
+    color: crimson;
+
+}
+
+.formParams{
+    margin: 3px;
+}
+.submitBtn{
+    margin: 20px 100px;
+    background: cornflowerblue;
+}
+
+.submitBtn:hover{
+
+    background: orange;
+}
+
+h1{
+    margin: 5px;
+}
+h2{
+    margin: 5px;
+}
+h3{
+    text-align: center;
+    background: rgba(255,255,255,0.5);
+	padding: 5px;
+    margin-top: 0px;
+}
+#listCity{
+    width: 90%;
+    margin: auto;
+}
+
+.cityName{
+    width: 80%;
+}
+
+.listCity{
+    width: 100%;
+    background: #D1E5E1;
+    padding: 4px;
+    font-weight: bold;
+	border-radius:20px;
+}
+
+.listCity:hover{
+    background: #003366;
+	color:#fafafa;
+}
+
+.btnDelete{
+    background: #f5f5f5;
+    padding: 4px 10px;
+	border-radius: 20px;
+}
+
+
+.btnDelete:hover{
+    background: red;
+	color:white;
+}
+#addCity{
+    color: #fcfcfc;
+    text-align: center;
+    background: #f2b812;
+    padding: 5px;
+    width: 100%;
+    font-weight: bold;
+}
+#exit{
+    background: #ffa6a6b3;
+    text-align: center;
+    padding: 4px;
+    color: #9c2851;
+    box-shadow: 0 0 4px #ff0000b3;
+    font-weight: bold;
+}
+#exit:hover{
+    background:#ff0000;
+	color:white;
+}
+
+#addCity:hover{
+    color:white;
+    cursor:pointer;
+    background:#008000;
+}
+
+.help{
+    background-color: yellow;
+    border: 1px solid black;
+    border-radius: 50%;
+    width: 15px;
+    height:15px;
+    font-size: 12px;
+    float: right;
+    cursor: pointer;
+    color: red;
+}
+.help:hover{
+    background-color: red;
+    color: white;
+}
+
+.itemMarker{
+    height: 30px;
+    background: #ffa500;
+    margin: 10px 28px;
+    border:1px dotted blue;
+    color: white;
+    font-weight: bold;
+    width: 200px;
+}
+.itemMarker:hover{
+    background:#c43b08 ;
+    color: white;
+}
+
+
+#citySettings{
+    background: rgba(255,255,255,0.2);
+}
+#rightTable{
+	margin: auto;
+	padding: 21px;
+}
+
+#addsightseen{
+    color:#191919;
+    background:#6897bb;
+	padding:5px;
+    left: 50%;
+    margin-left: 45%;
+    margin-top: 5px;
+    width: 100px;
+}
+#addsightseen:hover{
+    color:white;
+    background:#008000;
+}
+#marker{
+	height:500px;
+    background: beige;
+}
+#logoa{
+text-decoration:none;
+color:black;	
+}
+
+#image_box{
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    float: left;
+    margin-left: 12px;
+    margin-right: 12px;
+    list-style: none;
+    background: white;
+    background-size: cover;
+
+}
+.image_box{
+    width: 100px;
+    height: 100px;
+    border: 1px solid black;
+    float: left;
+    margin-left: 12px;
+    margin-right: 12px;
+    list-style: none;
+background: white;
+}
+.addImage{
+   width: 50px;
+    height: 50px;
+    margin-left: 25px;
+    margin-top: 25px;
+}
+.checkbox{
+    color: firebrick;
+    font-weight: bold;
+    font-size: 20px;
+    width: 200px;
+    border: 1px solid;
+    margin: 5px auto;
+    background: white;
+}
+#selectAll{
+    background: darkorange;
+    color: floralwhite;
+    font-weight: bold;
+    width: 150px;
+    margin: 5px 22%;
+    padding: 5px;
+}
+#selectAll:hover{
+    background: #ffc47d;
+    border: 2px solid orange;
+
+}
+#startSearch{
+    background: #7da6e4;
+    color: floralwhite;
+    font-weight: bold;
+    width: 150px;
+    padding: 5px;
+    margin: 5px 22%;
+}
+#startSearch:hover{
+    background:mediumslateblue;
+    color: floralwhite;
+    border: 2px solid fuchsia;
+}
+#saveResult{
+    ackground: #63f563;
+    color: #ea1717;
+    font-weight: bold;
+    width: 150px;
+    margin: 5px 22%;
+    padding: 5px;
+}

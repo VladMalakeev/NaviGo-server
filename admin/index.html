@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>NaviGo</title>
+    <link rel="stylesheet" type="text/css" href="admin/style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+<div id="wrap">
+    <div id="header">
+       <a href="/" id = "logoa" ><h1>NaviGo ADMIN PANEL</h1></a>
+    </div>
+    <table id="content">
+        <tr>
+        <td width="15%" id = "TdLeftBarId">
+            <div id="leftBar">
+                <div id="topBtn">
+                    <h3>List of cities</h3>
+                   <table id="listCity">
+
+                        <?php
+                         $sql="SELECT name FROM city";
+                         $result = $db->query($sql);
+                        while($city=$result->fetch(PDO::FETCH_ASSOC)){
+                        $name = $city['name']; ?>
+                       <tr>
+                        <td class="cityName"> <button class="listCity" onclick="clickOnItem('<?php echo $name ?>')" > <?php echo $name ?> </button></td>
+                           <td class="deleteCity"> <button class="btnDelete" onclick="deleteCity('<?php echo $name ?>')">X</button></td>
+                       </tr>
+                        <?php
+                         }
+                          ?>
+
+                   </table>
+                </div>
+                <div id="bottomBtn">
+                    <button id="addCity"> ADD NEW CITY</button>
+                   <a  href="/?exit=true"> <div id="exit">EXIT</div></a>
+                </div>
+            </div>
+        </td>
+
+
+        <td  width="65%" id="TdMapId">
+            <div id="centerArea">
+                    <img id="mapImg" src="../img/map.png">
+                    <!--блок с картой -->
+                    <div id="map"></div>
+            </div>
+        </td>
+
+
+        <td  width="20%" id = "TdRightBarId">
+           <!-- <img id="settingImg" src="../img/setting.png">-->
+            <div id="rightBar">
+
+                <!--добавление города-->
+                <div id="citySettings">
+                    <form action="" method="post">
+                        <table id="formTable" style="margin:auto;" >
+                            <tr ><td colspan="2">
+                                <p class="formTitle">City name <span class="help" title="Введите название города">?</span></p></td></tr>
+                            <tr><td><input type="name" size="20" name="cityName" required ></td></tr>
+
+                            <tr><td colspan="2"> <p  class="formTitle">Boundaries <span class="help" title="Нарисуйте границу. Можно перетаскивать, масштабировать, удалять. По окончании работы обязательно сохранить">?</span></p></td></tr>
+                            <tr><td> <input type="button" id="btnDrawBounds" onclick="drawBorder()" value="Draw a border"></td>
+                                <td> <input type="button" id="btnDeleteBounds" onclick="deleteBorder()" value="Delete"></td>
+                            </tr>
+
+                            <tr>
+                                <td><p  class="formParams">North</p></td>
+                                <td><input type="text" id="north" name="north" size="10"  required></td>
+                            </tr>
+
+                            <tr>
+                                <td><p  class="formParams">East</p></td>
+                                <td><input type="text" id="east" name="east" size="10"  required></td>
+                            </tr>
+
+                            <tr>
+                                <td><p  class="formParams">South</p></td>
+                                <td><input type="text" id="south" name="south" size="10"  required></td>
+                            </tr>
+
+                            <tr>
+                                <td><p  class="formParams">West</p></td>
+                                <td><input type="text" id="west" name="west" size="10"  required></td>
+                            </tr>
+                            <tr><td colspan="2"><input type="button" id="btnSaveBounds" onclick="saveBorder()" value="Apply"></td></tr>
+
+                            <tr><td colspan="2"><p  class="formTitle">City center <span class="help" title="Кликните на любом месте карты в пределах рамки. Маркер можно перетаскивать, при повторном клике - удалить">?</span></p></td></tr>
+                            <tr>
+                                <td><p  class="formParams">Latitude</p></td>
+                                <td><input type="text" id="centerLat" name="startLat" size="10" required></td>
+                            </tr>
+
+                            <tr>
+                                <td><p  class="formParams">Longetude</p></td>
+                                <td><input type="text" id="centerLon" name="startLon" size="10" required></td>
+                            </tr>
+
+                            <tr><td colspan="2"><p  class="formTitle">Zoom Levels <span class="help" title="значения от 1 до 18 (рекомендуемый миниум 12-13)">?</span></p></td></tr>
+                            <tr>
+                                <td><p  class="formParams">minZoom</p></td>
+                                <td><input type="text" name="minZoom" size="10" required></td>
+                            </tr>
+
+                            <tr>
+                                <td><p  class="formParams">maxZoom</p></td>
+                                <td><input type="text" name="maxZoom" size="10" required></td>
+                            </tr>
+
+                            <tr><td colspan="2"><input class="submitBtn" type="submit" name="saveCity" value="Save"></td></tr>
+
+                        </table>
+                    </form>
+                </div>
+                <!-- конец блока-->
+
+                <!-- добавление маркера-->
+                <div id="cityMenu">
+                    <div>
+                    <button class="itemMarker" onclick="createMarker()">ADD MARKER</button>
+                    </div>
+					<div>
+                    <button class="itemMarker" onclick="">EDIT MARKER</button>
+                    </div>
+					<div>
+                    <button class="itemMarker" onclick="">DELETE MARKER</button>
+                    </div>
+                    <div>
+                    <button class="itemMarker" id="rare" onclick="generate()">AUTO-SEARCH</button>
+                    </div>
+                </div>
+
+                <div id="marker">
+                    <form action="" method="post" enctype="multipart/form-data">
+                        <table id = "rightTable" style="margin: auto; width: 100%">
+                            <tr>
+                                <td><p class="formTitle">Place name</p></td>
+                                <td ><p class="formTitle">Coordinates</p></td>
+                                <td><p class="formTitle">Type</p></td>
+                            </tr>
+                            <tr>
+
+                                <td><input  type="text" size="55" id="placeName" required name="markerName"></td>
+                                <td>
+                                   <input type="text" size="10" id="markerLat" name="markerLat" required placeholder=" Latitude"><br>
+                                    <input type="text" size="10" id="markerLon" name="markerLon" required placeholder="Longetude">
+                                </td>
+                                <td>
+                                    <select name="type">
+                                        <option value="amusement_park">Amusement park</option>
+                                        <option value="aquarium">Aquarium</option>
+                                        <option value="park">Park</option>
+                                        <option value="art_gallery">Art gallery</option>
+                                        <option value="bowling_alley">Bowling</option>
+                                        <option value="zoo">Zoo</option>
+                                        <option value="stadium">Stadium</option>
+                                        <option value="museum">Museum</option>
+                                        <option  value="movie_theater">Movie theater</option>
+                                        <option value="monument">Hotel</option>
+                                        <option value="church">Church</option>
+                                        <option value="synagogue">Synagogue</option>
+                                        <option value="other">Other</option>
+
+                                    </select></td>
+                            </tr>
+
+                            <tr><td colspan="3"><p class="formTitle">Description</p></td></tr>
+                            <tr><td colspan="3"><textarea style="resize: none;width:99%;" required cols="25" rows="9" name="descript" ></textarea></td></tr>
+
+
+                            <tr><td colspan="3"><p class="formTitle">Photo</p></td></tr>
+                            <tr><td colspan="3">
+                                <div id="list">
+                                    <ul>
+                                        <li id="image_box">
+                                            <input type="file" name="picture"  style="display: none" class="inputFile">
+                                            <img src="img/plus.png" onclick="addPhoto()" class="addImage" id="addImage">
+                                        </li>
+                                        <li class="image_box">
+                                            <img src="img/plus.png" onclick="addPhoto()" class="addImage">
+                                        </li>
+                                        <li class="image_box"><img src="img/plus.png" onclick="addPhoto()" class="addImage"></li>
+                                        <li class="image_box"><img src="img/plus.png" onclick="addPhoto()" class="addImage"></li>
+                                        <li class="image_box"><img src="img/plus.png" onclick="addPhoto()" class="addImage"></li>
+                                    </ul>
+                                </div>
+
+                            </td></tr>
+                            <tr><td colspan="3"><input id="addsightseen" type="submit"   name="saveMarker" value="Add Marker"></td></tr>
+                            <input style="display:none"id="current_city" name="current_city" value="">
+                        </table>
+                    </form>
+                </div>
+
+
+                <div id="generateMarker">
+                    <form action="" method="post">
+                        <div><h3>Search by type</h3></div>
+                        <div class="checkbox" ><input type="checkbox"class="selectBox" value="amusement_park">Amusement park</div>
+                        <div class="checkbox"><input type="checkbox" class="selectBox"  value="aquarium">Aquarium</div>
+                        <div class="checkbox"><input type="checkbox" class="selectBox"  value="art_gallery">Art gallery</div>
+                        <div class="checkbox"><input type="checkbox" class="selectBox"  value="bowling_alley">Bowling</div>
+                        <div class="checkbox"><input type="checkbox" class="selectBox"  value="zoo">Zoo</div>
+                        <div class="checkbox"><input type="checkbox" class="selectBox"  value="stadium">Stadium</div>
+                        <div class="checkbox"><input type="checkbox" class="selectBox"  value="park">Park</div>
+                        <div class="checkbox"><input type="checkbox" class="selectBox"  value="museum">Museum</div>
+                        <div class="checkbox"><input type="checkbox" class="selectBox"  value="movie_theater">Movie theater</div>
+                        <div class="checkbox"><input type="checkbox" class="selectBox"  value="monument">Hotel</div>
+                        <div class="checkbox"><input type="checkbox" class="selectBox"  value="church">Church</div>
+                        <div class="checkbox"><input type="checkbox" class="selectBox"  value="synagogue">Synagogue</div>
+                        <div ><input type="button" onclick="checkAll() "value="Select all" id="selectAll"></div>
+                        <div><input type="button" onclick="startSearch1()" value="Start search" id="startSearch"></div>
+                       <!--<input type="button" onclick="saveMarkersToDB()" value="save" id="saveResult">-->
+
+                    </form>
+                </div>
+            </div>
+        </td>
+
+        </tr>
+    </table>
+
+    
+</div>
+
+<script src="admin/listener.js" type="text/javascript"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHtvAIT0EHTWaBSWZDkJwr06imjJxPpsE&libraries=places">
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHtvAIT0EHTWaBSWZDkJwr06imjJxPpsE&callback=initMap"></script>
+</body>
+</html>
